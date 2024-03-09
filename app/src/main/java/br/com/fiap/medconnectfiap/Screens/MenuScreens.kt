@@ -1,14 +1,23 @@
 package br.com.fiap.medconnectfiap.Screens
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.CornerSize
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -48,15 +57,29 @@ fun MenuScreen() {
         }
         Spacer(modifier = Modifier.height(16.dp))
         // Adiciona os botões de navegação
-        Row(
+        Button(
+            onClick = {},
+            colors = ButtonDefaults.buttonColors(Color.Transparent),
             modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 16.dp), // Adiciona um espaçamento horizontal
-            horizontalArrangement = Arrangement.SpaceEvenly
+                .background(
+                    Brush.horizontalGradient(
+                        colors = listOf(AzulMedio, AzulPiscina)
+                    )
+                )
+                .padding(horizontal = 16.dp)
         ) {
-            NavigationButton(iconId = R.drawable.menu_24, text = "Home")
-            NavigationButton(iconId = R.drawable.menu_24, text = "Search")
+            Text(
+                text = "ENTRAR",
+                fontSize = 20.sp,
+                color = Color.Black
+            )
         }
+
+
+
+
+
+
         Spacer(modifier = Modifier.height(16.dp))
         // Adiciona a segunda linha de ícones
         Row(
@@ -88,23 +111,24 @@ fun MenuScreen() {
             )
         }
     }
-}
 
-@Composable
-fun NavigationButton(iconId: Int, text: String) {
-    Column(
-        horizontalAlignment = androidx.compose.ui.Alignment.CenterHorizontally
-    ) {
-        Icon(
-            painter = painterResource(id = iconId),
-            contentDescription = text,
-            Modifier.size(48.dp)
-        )
-        Text(
-            text = text,
-            fontSize = 14.sp,
-            color = Color.White
-        )
+
+    @Composable
+    fun NavigationButton(iconId: Int, text: String) {
+        Column(
+            horizontalAlignment = androidx.compose.ui.Alignment.CenterHorizontally
+        ) {
+            Icon(
+                painter = painterResource(id = iconId),
+                contentDescription = text,
+                Modifier.size(48.dp)
+            )
+            Text(
+                text = text,
+                fontSize = 14.sp,
+                color = Color.White
+            )
+        }
     }
 }
 

@@ -27,6 +27,7 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import br.com.fiap.medconnectfiap.R
@@ -65,153 +66,139 @@ fun PacienteCadastroScreen() {
         }
 
         Column {
-            Row(verticalAlignment = Alignment.CenterVertically) {
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier.width(350.dp)
+            ) {
                 Icon(
-                    painter = painterResource(id = R.drawable.person_24),
+                    painter = painterResource(id = R.drawable.person_pin_24),
                     contentDescription = "Ícone de Paciente",
                     modifier = Modifier.size(38.dp)
                         .align(Alignment.CenterVertically)
+
                 )
                 OutlinedTextField(
                     value = "Nome",
                     onValueChange = {  },
                     modifier = Modifier.fillMaxWidth(),
                     label = {
-                        Text(text = "Digite seu nome")
+                        Text(text = "Digite seu nome", color = Color.White)
                     },
                     keyboardOptions = KeyboardOptions(
                         keyboardType = KeyboardType.Phone
-                    )
+                    ),
+                    textStyle = TextStyle(color = Color.DarkGray)
+                )
+
+            }
+            Spacer(modifier = Modifier.height(16.dp))
+
+
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier.width(350.dp)
+                ) {
+                Icon(
+                    painter = painterResource(id = R.drawable.document),
+                    contentDescription = "Ícone de Paciente",
+                    modifier = Modifier.size(38.dp)
+                        .align(Alignment.CenterVertically)
+                )
+                OutlinedTextField(
+                    value = "CPF",
+                    onValueChange = {  },
+                    modifier = Modifier.fillMaxWidth(),
+                    label = {
+                        Text(text = "Digite seu CPF",  color = Color.White)
+                    },
+                    keyboardOptions = KeyboardOptions(
+                        keyboardType = KeyboardType.Phone
+                    ),
+                    textStyle = TextStyle(color = Color.DarkGray)
+                )
+            }
+            Spacer(modifier = Modifier.height(16.dp))
+
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier.width(350.dp)
+            ) {
+                Icon(
+                    painter = painterResource(id = R.drawable.calendar),
+                    contentDescription = "Ícone de Paciente",
+                    modifier = Modifier.size(38.dp)
+                        .align(Alignment.CenterVertically)
+                )
+                OutlinedTextField(
+                    value = "Data de Nascimento",
+                    onValueChange = {  },
+                    modifier = Modifier.fillMaxWidth(),
+                    label = {
+                        Text(text = "Digite uma data",  color = Color.White)
+                    },
+                    keyboardOptions = KeyboardOptions(
+                        keyboardType = KeyboardType.Phone
+                    ),
+                    textStyle = TextStyle(color = Color.DarkGray)
                 )
             }
             Spacer(modifier = Modifier.height(16.dp))
 
 
-            Row(verticalAlignment = Alignment.CenterVertically) {
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier.width(350.dp)
+            ) {
                 Icon(
-                    painter = painterResource(id = R.drawable.person_24),
+                    painter = painterResource(id = R.drawable.phone),
                     contentDescription = "Ícone de Paciente",
                     modifier = Modifier.size(38.dp)
                         .align(Alignment.CenterVertically)
                 )
                 OutlinedTextField(
-                    value = "Nome",
+                    value = "Contato",
                     onValueChange = {  },
                     modifier = Modifier.fillMaxWidth(),
                     label = {
-                        Text(text = "Digite seu nome")
+                        Text(text = "Digite seu telefone",  color = Color.White)
                     },
                     keyboardOptions = KeyboardOptions(
                         keyboardType = KeyboardType.Phone
-                    )
+                    ),
+                    textStyle = TextStyle(color = Color.DarkGray)
                 )
             }
             Spacer(modifier = Modifier.height(16.dp))
 
-            Row(verticalAlignment = Alignment.CenterVertically) {
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier.width(350.dp)
+            ) {
                 Icon(
-                    painter = painterResource(id = R.drawable.person_24),
+                    painter = painterResource(id = R.drawable.location),
                     contentDescription = "Ícone de Paciente",
                     modifier = Modifier.size(38.dp)
                         .align(Alignment.CenterVertically)
                 )
                 OutlinedTextField(
-                    value = "Nome",
+                    value = "Endereço",
                     onValueChange = {  },
                     modifier = Modifier.fillMaxWidth(),
                     label = {
-                        Text(text = "Digite seu nome")
+                        Text(text = "Digite seu endereço",  color = Color.White)
                     },
                     keyboardOptions = KeyboardOptions(
                         keyboardType = KeyboardType.Phone
-                    )
-                )
-            }
-            Spacer(modifier = Modifier.height(16.dp))
-
-
-            Row(verticalAlignment = Alignment.CenterVertically) {
-                Icon(
-                    painter = painterResource(id = R.drawable.person_24),
-                    contentDescription = "Ícone de Paciente",
-                    modifier = Modifier.size(38.dp)
-                        .align(Alignment.CenterVertically)
-                )
-                OutlinedTextField(
-                    value = "Nome",
-                    onValueChange = {  },
-                    modifier = Modifier.fillMaxWidth(),
-                    label = {
-                        Text(text = "Digite seu nome")
-                    },
-                    keyboardOptions = KeyboardOptions(
-                        keyboardType = KeyboardType.Phone
-                    )
-                )
-            }
-            Spacer(modifier = Modifier.height(16.dp))
-
-            Row(verticalAlignment = Alignment.CenterVertically) {
-                Icon(
-                    painter = painterResource(id = R.drawable.person_24),
-                    contentDescription = "Ícone de Paciente",
-                    modifier = Modifier.size(38.dp)
-                        .align(Alignment.CenterVertically)
-                )
-                OutlinedTextField(
-                    value = "Nome",
-                    onValueChange = {  },
-                    modifier = Modifier.fillMaxWidth(),
-                    label = {
-                        Text(text = "Digite seu nome")
-                    },
-                    keyboardOptions = KeyboardOptions(
-                        keyboardType = KeyboardType.Phone
-                    )
+                    ),
+                    textStyle = TextStyle(color = Color.DarkGray)
                 )
             }
             Spacer(modifier = Modifier.height(16.dp))
 
 
-            Row(verticalAlignment = Alignment.CenterVertically) {
-                Icon(
-                    painter = painterResource(id = R.drawable.person_24),
-                    contentDescription = "Ícone de Paciente",
-                    modifier = Modifier.size(38.dp)
-                        .align(Alignment.CenterVertically)
-                )
-                OutlinedTextField(
-                    value = "Nome",
-                    onValueChange = {  },
-                    modifier = Modifier.fillMaxWidth(),
-                    label = {
-                        Text(text = "Digite seu nome")
-                    },
-                    keyboardOptions = KeyboardOptions(
-                        keyboardType = KeyboardType.Phone
-                    )
-                )
-            }
+
             Spacer(modifier = Modifier.height(16.dp))
-            Row(verticalAlignment = Alignment.CenterVertically) {
-                Icon(
-                    painter = painterResource(id = R.drawable.person_24),
-                    contentDescription = "Ícone de Paciente",
-                    modifier = Modifier.size(38.dp)
-                        .align(Alignment.CenterVertically)
-                )
-                OutlinedTextField(
-                    value = "Nome",
-                    onValueChange = {  },
-                    modifier = Modifier.fillMaxWidth(),
-                    label = {
-                        Text(text = "Digite seu nome")
-                    },
-                    keyboardOptions = KeyboardOptions(
-                        keyboardType = KeyboardType.Phone
-                    )
-                )
-            }
+
             Spacer(modifier = Modifier.height(16.dp))
             Button (
                 onClick = {  },

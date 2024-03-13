@@ -10,15 +10,18 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import br.com.fiap.medconnectfiap.R
 import br.com.fiap.medconnectfiap.database.repository.PacienteRepository
@@ -116,12 +119,30 @@ fun PacienteCadastroForm(
             )
         }
 
+        Row(
+            modifier = Modifier
+                .fillMaxWidth(),
+            horizontalArrangement = Arrangement.Center,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Text(
+                text = "CADASTRO DE PACIENTES",
+                fontSize = 24.sp,
+                color = Color.White,
+                fontWeight = FontWeight.Bold,
+                modifier = Modifier
+                    .padding(vertical = 16.dp, horizontal = 16.dp)
+            )
+        }
+
+
         Column {
             // Nome
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(16.dp)
+
             ) {
                 Icon(
                     painter = painterResource(id = R.drawable.person_pin_24),
@@ -129,6 +150,7 @@ fun PacienteCadastroForm(
                     modifier = Modifier
                         .size(38.dp)
                         .padding(end = 16.dp)
+                        .align(alignment = Alignment.CenterVertically)
                 )
                 OutlinedTextField(
                     value = nome,
@@ -152,6 +174,7 @@ fun PacienteCadastroForm(
                     modifier = Modifier
                         .size(38.dp)
                         .padding(end = 16.dp)
+                        .align(alignment = Alignment.CenterVertically)
                 )
                 OutlinedTextField(
                     value = cpf,
@@ -175,6 +198,7 @@ fun PacienteCadastroForm(
                     modifier = Modifier
                         .size(38.dp)
                         .padding(end = 16.dp)
+                        .align(alignment = Alignment.CenterVertically)
                 )
                 OutlinedTextField(
                     value = data,
@@ -198,6 +222,7 @@ fun PacienteCadastroForm(
                     modifier = Modifier
                         .size(38.dp)
                         .padding(end = 16.dp)
+                        .align(alignment = Alignment.CenterVertically)
                 )
                 OutlinedTextField(
                     value = telefone,
@@ -221,6 +246,7 @@ fun PacienteCadastroForm(
                     modifier = Modifier
                         .size(38.dp)
                         .padding(end = 16.dp)
+                        .align(alignment = Alignment.CenterVertically)
                 )
                 OutlinedTextField(
                     value = endereco,
@@ -246,7 +272,7 @@ fun PacienteCadastroForm(
                 },
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(16.dp)
+                    .padding(36.dp)
             ) {
                 Text(
                     text = "CADASTRAR",
@@ -257,12 +283,10 @@ fun PacienteCadastroForm(
     }
 }
 
-/*
-@Preview(showBackground = true, showSystemUi = true)
+/*@Preview(showBackground = true, showSystemUi = true)
 @Composable
 fun PacienteCadastroScreenPreview() {
     MedConnectFIAPTheme {
         PacienteCadastroScreen()
     }
-}
-*/
+}*/

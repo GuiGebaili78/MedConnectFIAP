@@ -1,44 +1,96 @@
 package br.com.fiap.medconnectfiap.Screens
 
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Button
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
-
-
-
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedTextField
-import androidx.compose.ui.draw.clip
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import br.com.fiap.medconnectfiap.R
+import br.com.fiap.medconnectfiap.database.repository.PacienteRepository
+import br.com.fiap.medconnectfiap.model.PacienteModel
 import br.com.fiap.medconnectfiap.ui.theme.AzulClaro
 import br.com.fiap.medconnectfiap.ui.theme.AzulEscuro
-import br.com.fiap.medconnectfiap.ui.theme.AzulMedio
-import br.com.fiap.medconnectfiap.ui.theme.AzulPiscina
 import br.com.fiap.medconnectfiap.ui.theme.MedConnectFIAPTheme
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 
 @Composable
-fun PacienteCadastroScreen() {
+fun PacienteCadastroScreen(navController: NavController) {
+
+    val nomeState = remember {
+        mutableStateOf("")
+    }
+    val cpfState = remember {
+        mutableStateOf("")
+    }
+    val dataState = remember {
+        mutableStateOf("")
+    }
+    val telefoneState = remember {
+        mutableStateOf("")
+    }
+    val enderecoState = remember {
+        mutableStateOf("")
+    }
+
+
+
+    Column {
+        PacienteCadastroForm(
+            nome = nomeState.value,
+            cpf = cpfState.value,
+            data = dataState.value,
+            telefone = telefoneState.value,
+            endereco = enderecoState.value,
+            onNomeChange = {
+                nomeState.value = it
+            },
+            onCpfChange = {
+                cpfState.value = it
+            },
+            onDataChange = {
+                dataState.value = it
+            },
+            onTelefoneChange = {
+                telefoneState.value = it
+            },
+            onEnderecoChange = {
+                enderecoState.value = it
+            }
+        )
+    }
+}
+
+@Composable
+fun PacienteCadastroForm(
+    nome: String,
+    cpf: String,
+    data: String,
+    telefone: String,
+    endereco: String,
+    onNomeChange: (String) -> Unit,
+    onCpfChange: (String) -> Unit,
+    onDataChange: (String) -> Unit,
+    onTelefoneChange: (String) -> Unit,
+    onEnderecoChange: (String) -> Unit
+) {
+    val context = LocalContext.current
+    var pacienteRepository = PacienteRepository(context)
     Column(
         modifier = Modifier
             .fillMaxSize() // Preenche toda a tela
@@ -49,8 +101,7 @@ fun PacienteCadastroScreen() {
             modifier = Modifier
                 .fillMaxWidth() // Preenche a largura disponível
                 .height(50.dp)
-                .background(Brush.linearGradient(colors = listOf(AzulMedio, AzulPiscina))),
-            horizontalArrangement = Arrangement.SpaceBetween
+                .background(Brush.linearGradient(colors = listOf(AzulClaro, AzulEscuro)))
         ) {
             Icon(
                 painter = painterResource(id = R.drawable.notifications_none_24),
@@ -66,383 +117,152 @@ fun PacienteCadastroScreen() {
         }
 
         Column {
+            // Nome
             Row(
-                verticalAlignment = Alignment.CenterVertically,
-                modifier = Modifier.width(350.dp)
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(16.dp)
             ) {
                 Icon(
                     painter = painterResource(id = R.drawable.person_pin_24),
                     contentDescription = "Ícone de Paciente",
-                    modifier = Modifier.size(38.dp)
-                        .align(Alignment.CenterVertically)
-
+                    modifier = Modifier
+                        .size(38.dp)
+                        .padding(end = 16.dp)
                 )
                 OutlinedTextField(
-                    value = "Nome",
-                    onValueChange = {  },
+                    value = nome,
+                    onValueChange = { onNomeChange(it) },
                     modifier = Modifier.fillMaxWidth(),
-                    label = {
-                        Text(text = "Digite seu nome", color = Color.White)
-                    },
-                    keyboardOptions = KeyboardOptions(
-                        keyboardType = KeyboardType.Phone
-                    ),
-                    textStyle = TextStyle(color = Color.DarkGray)
+                    label = { Text("Digite seu nome", color = Color.White) },
+                    textStyle = TextStyle(color = Color.DarkGray),
+                    keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Text)
                 )
-
             }
-            Spacer(modifier = Modifier.height(16.dp))
 
-
+            // CPF
             Row(
-                verticalAlignment = Alignment.CenterVertically,
-                modifier = Modifier.width(350.dp)
-                ) {
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(16.dp)
+            ) {
                 Icon(
                     painter = painterResource(id = R.drawable.document),
                     contentDescription = "Ícone de Paciente",
-                    modifier = Modifier.size(38.dp)
-                        .align(Alignment.CenterVertically)
+                    modifier = Modifier
+                        .size(38.dp)
+                        .padding(end = 16.dp)
                 )
                 OutlinedTextField(
-                    value = "CPF",
-                    onValueChange = {  },
+                    value = cpf,
+                    onValueChange = { onCpfChange(it) },
                     modifier = Modifier.fillMaxWidth(),
-                    label = {
-                        Text(text = "Digite seu CPF",  color = Color.White)
-                    },
-                    keyboardOptions = KeyboardOptions(
-                        keyboardType = KeyboardType.Phone
-                    ),
-                    textStyle = TextStyle(color = Color.DarkGray)
+                    label = { Text("Digite seu CPF", color = Color.White) },
+                    textStyle = TextStyle(color = Color.DarkGray),
+                    keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Number)
                 )
             }
-            Spacer(modifier = Modifier.height(16.dp))
 
+            // Data de Nascimento
             Row(
-                verticalAlignment = Alignment.CenterVertically,
-                modifier = Modifier.width(350.dp)
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(16.dp)
             ) {
                 Icon(
                     painter = painterResource(id = R.drawable.calendar),
                     contentDescription = "Ícone de Paciente",
-                    modifier = Modifier.size(38.dp)
-                        .align(Alignment.CenterVertically)
+                    modifier = Modifier
+                        .size(38.dp)
+                        .padding(end = 16.dp)
                 )
                 OutlinedTextField(
-                    value = "Data de Nascimento",
-                    onValueChange = {  },
+                    value = data,
+                    onValueChange = { onDataChange(it) },
                     modifier = Modifier.fillMaxWidth(),
-                    label = {
-                        Text(text = "Digite uma data",  color = Color.White)
-                    },
-                    keyboardOptions = KeyboardOptions(
-                        keyboardType = KeyboardType.Phone
-                    ),
-                    textStyle = TextStyle(color = Color.DarkGray)
+                    label = { Text("Digite uma data", color = Color.White) },
+                    textStyle = TextStyle(color = Color.DarkGray),
+                    keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Number)
                 )
             }
-            Spacer(modifier = Modifier.height(16.dp))
 
-
+            // Telefone
             Row(
-                verticalAlignment = Alignment.CenterVertically,
-                modifier = Modifier.width(350.dp)
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(16.dp)
             ) {
                 Icon(
                     painter = painterResource(id = R.drawable.phone),
                     contentDescription = "Ícone de Paciente",
-                    modifier = Modifier.size(38.dp)
-                        .align(Alignment.CenterVertically)
+                    modifier = Modifier
+                        .size(38.dp)
+                        .padding(end = 16.dp)
                 )
                 OutlinedTextField(
-                    value = "Contato",
-                    onValueChange = {  },
+                    value = telefone,
+                    onValueChange = { onTelefoneChange(it) },
                     modifier = Modifier.fillMaxWidth(),
-                    label = {
-                        Text(text = "Digite seu telefone",  color = Color.White)
-                    },
-                    keyboardOptions = KeyboardOptions(
-                        keyboardType = KeyboardType.Phone
-                    ),
-                    textStyle = TextStyle(color = Color.DarkGray)
+                    label = { Text("Digite seu telefone", color = Color.White) },
+                    textStyle = TextStyle(color = Color.DarkGray),
+                    keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Phone)
                 )
             }
-            Spacer(modifier = Modifier.height(16.dp))
 
+            // Endereço
             Row(
-                verticalAlignment = Alignment.CenterVertically,
-                modifier = Modifier.width(350.dp)
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(16.dp)
             ) {
                 Icon(
                     painter = painterResource(id = R.drawable.location),
                     contentDescription = "Ícone de Paciente",
-                    modifier = Modifier.size(38.dp)
-                        .align(Alignment.CenterVertically)
+                    modifier = Modifier
+                        .size(38.dp)
+                        .padding(end = 16.dp)
                 )
                 OutlinedTextField(
-                    value = "Endereço",
-                    onValueChange = {  },
+                    value = endereco,
+                    onValueChange = { onEnderecoChange(it) },
                     modifier = Modifier.fillMaxWidth(),
-                    label = {
-                        Text(text = "Digite seu endereço",  color = Color.White)
-                    },
-                    keyboardOptions = KeyboardOptions(
-                        keyboardType = KeyboardType.Phone
-                    ),
-                    textStyle = TextStyle(color = Color.DarkGray)
+                    label = { Text("Digite seu endereço", color = Color.White) },
+                    textStyle = TextStyle(color = Color.DarkGray),
+                    keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Text)
                 )
             }
-            Spacer(modifier = Modifier.height(16.dp))
 
-
-
-            Spacer(modifier = Modifier.height(16.dp))
-
-            Spacer(modifier = Modifier.height(16.dp))
-            Button (
-                onClick = {  },
+            // Botão de Cadastro
+            Button(
+                onClick = {
+                    val paciente = PacienteModel(
+                        nome = nome,
+                        cpf = cpf,
+                        dtNascimento = LocalDate.parse(data, DateTimeFormatter.ofPattern("dd/MM/yyyy")),
+                        telefone = telefone,
+                        endereco = endereco
+                    )
+                    pacienteRepository.salvar(paciente)
+                },
                 modifier = Modifier
-                    .width(200.dp)
-                    .align(Alignment.CenterHorizontally)
+                    .fillMaxWidth()
+                    .padding(16.dp)
             ) {
                 Text(
-                    text = "CADASTAR",
+                    text = "CADASTRAR",
                     modifier = Modifier.padding(8.dp)
                 )
             }
         }
-
-
-
-
-        Spacer(modifier = Modifier.height(16.dp))
-
-        // Adiciona a segunda linha de ícones
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(50.dp)
-                .background(Brush.linearGradient(colors = listOf(AzulMedio, AzulPiscina))),
-            horizontalArrangement = Arrangement.SpaceBetween
-        ) {
-            Icon(
-                painter = painterResource(id = R.drawable.arrow_back_ios_24),
-                contentDescription = "Icon 1",
-                Modifier.padding(10.dp)
-            )
-            Icon(
-                painter = painterResource(id = R.drawable.home_24),
-                contentDescription = "Icon 2",
-                Modifier.padding(10.dp)
-            )
-            Icon(
-                painter = painterResource(id = R.drawable.contact_phone_24),
-                contentDescription = "Icon 3",
-                Modifier.padding(10.dp)
-            )
-            Icon(
-                painter = painterResource(id = R.drawable.logout_24),
-                contentDescription = "Icon 4",
-                Modifier.padding(10.dp)
-            )
-        }
     }
 }
 
-@Composable
-fun PacienteCadastroScreenCard() {
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(16.dp)
-            .clip(RoundedCornerShape(16.dp))
-            .background(Brush.linearGradient(colors = listOf(AzulMedio, AzulPiscina)))
-    ) {
-        Icon(
-            painter = painterResource(id = R.drawable.person_24),
-            contentDescription = "Ícone de Paciente",
-            modifier = Modifier.size(48.dp)
-        )
-        Column(
-            modifier = Modifier.padding(start = 16.dp)
-        ) {
-            Text(
-                text = "Nome do Paciente",
-                fontSize = 18.sp,
-                color = Color.White
-            )
-            Spacer(modifier = Modifier.height(4.dp))
-            Text(
-                text = "Data de Nascimento: 01/01/2000",
-                fontSize = 14.sp,
-                color = Color.White
-            )
-            Spacer(modifier = Modifier.height(4.dp))
-            Text(
-                text = "CPF: 123.456.789-00",
-                fontSize = 14.sp,
-                color = Color.White
-            )
-        }
-    }
-}
-
+/*
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 fun PacienteCadastroScreenPreview() {
     MedConnectFIAPTheme {
         PacienteCadastroScreen()
-    }
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/*
-
-@Composable
-fun ContatosScreen() {
-
-    var nomeState = remember {
-        mutableStateOf("")
-    }
-
-    var telefoneState = remember {
-        mutableStateOf("")
-    }
-
-    var amigoState = remember {
-        mutableStateOf(false)
-    }
-
-    val context = LocalContext.current
-    val contatoRepository = ContatoRepository(context)
-
-    var listaContatosState = remember {
-        mutableStateOf(contatoRepository.listarContatos())
-    }
-
-    Column {
-        ContatoForm(
-            nome = nomeState.value,
-            telefone = telefoneState.value,
-            amigo = amigoState.value,
-            onNomeChange = {
-                nomeState.value = it
-            },
-            onTelefoneChange = {
-                telefoneState.value = it
-            },
-            onAmigoChange = {
-                amigoState.value = it
-            },
-            atualizar = {
-                listaContatosState.value = contatoRepository.listarContatos()
-            }
-        )
-        ContatoList(
-            listaContatosState,
-            atualizar = {
-                listaContatosState.value = contatoRepository.listarContatos()
-            }
-        )
-    }
-}
-
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun ContatoForm(
-    nome: String,
-    telefone: String,
-    amigo: Boolean,
-    onNomeChange: (String) -> Unit,
-    onTelefoneChange: (String) -> Unit,
-    onAmigoChange: (Boolean) -> Unit,
-    atualizar: () -> Unit
-) {
-    // obter instância do repositório
-    val context = LocalContext.current
-    val contatoRepository = ContatoRepository(context)
-    Column(
-        modifier = Modifier.padding(16.dp)
-    ) {
-        Text(
-            text = "Cadastro de contatos",
-            fontSize = 24.sp,
-            fontWeight = FontWeight.Bold,
-            color = Color(
-                0xFFE91E63
-            )
-        )
-        Spacer(modifier = Modifier.height(8.dp))
-        OutlinedTextField(
-            value = nome,
-            onValueChange = { onNomeChange(it) },
-            modifier = Modifier.fillMaxWidth(),
-            label = {
-                Text(text = "Nome do contato")
-            },
-            keyboardOptions = KeyboardOptions(
-                keyboardType = KeyboardType.Text,
-                capitalization = KeyboardCapitalization.Words
-            )
-        )
-        Spacer(modifier = Modifier.height(8.dp))
-        OutlinedTextField(
-            value = telefone,
-            onValueChange = { onTelefoneChange(it) },
-            modifier = Modifier.fillMaxWidth(),
-            label = {
-                Text(text = "Telefone do contato")
-            },
-            keyboardOptions = KeyboardOptions(
-                keyboardType = KeyboardType.Phone
-            )
-        )
-        Spacer(modifier = Modifier.height(8.dp))
-        Row(
-            verticalAlignment = Alignment.CenterVertically,
-            modifier = Modifier.fillMaxWidth()
-        ) {
-            Checkbox(checked = amigo, onCheckedChange = {
-                onAmigoChange(it)
-            })
-            Text(text = "Amigo")
-        }
-        Spacer(modifier = Modifier.height(16.dp))
-        Button(
-            onClick = {
-                val contato = Contato(
-                    nome = nome,
-                    telefone = telefone,
-                    isAmigo = amigo
-                )
-                contatoRepository.salvar(contato)
-                atualizar()
-            },
-            modifier = Modifier.fillMaxWidth()
-        ) {
-            Text(
-                text = "CADASTAR",
-                modifier = Modifier.padding(8.dp)
-            )
-        }
-
     }
 }
 */

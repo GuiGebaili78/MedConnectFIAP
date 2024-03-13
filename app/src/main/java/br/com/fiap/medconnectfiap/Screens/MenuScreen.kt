@@ -23,9 +23,10 @@ import br.com.fiap.medconnectfiap.ui.theme.AzulEscuro
 import br.com.fiap.medconnectfiap.ui.theme.AzulMedio
 import br.com.fiap.medconnectfiap.ui.theme.AzulPiscina
 import br.com.fiap.medconnectfiap.ui.theme.MedConnectFIAPTheme
+import androidx.navigation.NavController
 
 @Composable
-fun MenuScreen() {
+fun MenuScreen(navController: NavController) {
     Column(
         modifier = Modifier
             .fillMaxSize() // Preenche toda a tela
@@ -76,7 +77,9 @@ fun MenuScreen() {
             }
             Spacer(modifier = Modifier.height(16.dp))
             Button(
-                onClick = {},
+                onClick = {
+                    navController.navigate("pacientecadastroscreen")
+                },
                 colors = ButtonDefaults.buttonColors(AzulMedio),
                 modifier = Modifier
                     .padding(horizontal = 16.dp)
@@ -190,6 +193,7 @@ fun PatientCard() {
     }
 }
 
+/*
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 fun MenuScreenPreview() {
@@ -197,3 +201,4 @@ fun MenuScreenPreview() {
         MenuScreen()
     }
 }
+*/

@@ -1,10 +1,11 @@
-/*
 package br.com.fiap.medconnectfiap.database.repository
 
 
 import android.content.Context
 import br.com.fiap.medconnectfiap.database.dao.PacienteDb
+
 import br.com.fiap.medconnectfiap.model.PacienteModel
+
 
 
 class PacienteRepository(context: Context) {
@@ -31,4 +32,4 @@ class PacienteRepository(context: Context) {
         return db.buscarPacienteModelPeloId(id)
     }
 
-}*/
+}

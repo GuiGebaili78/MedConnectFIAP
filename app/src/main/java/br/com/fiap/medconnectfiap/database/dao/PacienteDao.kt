@@ -1,4 +1,3 @@
-/*
 package br.com.fiap.medconnectfiap.database.dao
 
 import androidx.room.Dao
@@ -29,4 +28,3 @@ interface PacienteDao {
 
 
 }
-*/

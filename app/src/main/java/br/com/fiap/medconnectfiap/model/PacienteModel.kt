@@ -9,9 +9,9 @@ import java.time.LocalDate
 data class PacienteModel(
     @PrimaryKey(autoGenerate = true) var id: Long = 0,
     var nome: String = "",
-    var cpf: Int = 0,
+    var cpf: String = "",
     @ColumnInfo(name = "dt_nascimento") var dtNascimento: String = "1980-01-01",
-    var telefone: Int = 0,
+    var telefone: String = "",
     var endereco: String = ""
 ) {
     fun setDtNascimento(date: LocalDate) {

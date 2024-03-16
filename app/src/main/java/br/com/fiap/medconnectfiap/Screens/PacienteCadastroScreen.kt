@@ -1,6 +1,7 @@
 package br.com.fiap.medconnectfiap.Screens
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
@@ -23,6 +24,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import br.com.fiap.medconnectfiap.R
 import br.com.fiap.medconnectfiap.database.repository.PacienteRepository
 import br.com.fiap.medconnectfiap.model.PacienteModel
@@ -31,6 +33,11 @@ import br.com.fiap.medconnectfiap.ui.theme.AzulEscuro
 import br.com.fiap.medconnectfiap.ui.theme.MedConnectFIAPTheme
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
+import br.com.fiap.medconnectfiap.ui.theme.AzulMedio
+import br.com.fiap.medconnectfiap.ui.theme.AzulPiscina
 
 @Composable
 fun PacienteCadastroScreen(navController: NavController) {
@@ -51,49 +58,9 @@ fun PacienteCadastroScreen(navController: NavController) {
         mutableStateOf("")
     }
 
-
-
-    Column {
-        PacienteCadastroForm(
-            nome = nomeState.value,
-            cpf = cpfState.value,
-            data = dataState.value,
-            telefone = telefoneState.value,
-            endereco = enderecoState.value,
-            onNomeChange = {
-                nomeState.value = it
-            },
-            onCpfChange = {
-                cpfState.value = it
-            },
-            onDataChange = {
-                dataState.value = it
-            },
-            onTelefoneChange = {
-                telefoneState.value = it
-            },
-            onEnderecoChange = {
-                enderecoState.value = it
-            }
-        )
-    }
-}
-
-@Composable
-fun PacienteCadastroForm(
-    nome: String,
-    cpf: String,
-    data: String,
-    telefone: String,
-    endereco: String,
-    onNomeChange: (String) -> Unit,
-    onCpfChange: (String) -> Unit,
-    onDataChange: (String) -> Unit,
-    onTelefoneChange: (String) -> Unit,
-    onEnderecoChange: (String) -> Unit
-) {
     val context = LocalContext.current
-    var pacienteRepository = PacienteRepository(context)
+    val pacienteRepository = PacienteRepository(context)
+
     Column(
         modifier = Modifier
             .fillMaxSize() // Preenche toda a tela
@@ -135,26 +102,24 @@ fun PacienteCadastroForm(
             )
         }
 
-
         Column {
             // Nome
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(16.dp)
-
             ) {
                 Icon(
                     painter = painterResource(id = R.drawable.person_pin_24),
                     contentDescription = "Ícone de Paciente",
                     modifier = Modifier
                         .size(38.dp)
-                        .padding(end = 16.dp)
+                        .padding(end = 10.dp)
                         .align(alignment = Alignment.CenterVertically)
                 )
                 OutlinedTextField(
-                    value = nome,
-                    onValueChange = { onNomeChange(it) },
+                    value = nomeState.value,
+                    onValueChange = { nomeState.value = it },
                     modifier = Modifier.fillMaxWidth(),
                     label = { Text("Digite seu nome", color = Color.White) },
                     textStyle = TextStyle(color = Color.DarkGray),
@@ -170,15 +135,15 @@ fun PacienteCadastroForm(
             ) {
                 Icon(
                     painter = painterResource(id = R.drawable.document),
-                    contentDescription = "Ícone de Paciente",
+                    contentDescription = "Ícone de Documento",
                     modifier = Modifier
                         .size(38.dp)
-                        .padding(end = 16.dp)
+                        .padding(end = 10.dp)
                         .align(alignment = Alignment.CenterVertically)
                 )
                 OutlinedTextField(
-                    value = cpf,
-                    onValueChange = { onCpfChange(it) },
+                    value = cpfState.value,
+                    onValueChange = { cpfState.value = it },
                     modifier = Modifier.fillMaxWidth(),
                     label = { Text("Digite seu CPF", color = Color.White) },
                     textStyle = TextStyle(color = Color.DarkGray),
@@ -194,15 +159,15 @@ fun PacienteCadastroForm(
             ) {
                 Icon(
                     painter = painterResource(id = R.drawable.calendar),
-                    contentDescription = "Ícone de Paciente",
+                    contentDescription = "Ícone de Calendário",
                     modifier = Modifier
                         .size(38.dp)
-                        .padding(end = 16.dp)
+                        .padding(end = 10.dp)
                         .align(alignment = Alignment.CenterVertically)
                 )
                 OutlinedTextField(
-                    value = data,
-                    onValueChange = { onDataChange(it) },
+                    value = dataState.value,
+                    onValueChange = { dataState.value = it },
                     modifier = Modifier.fillMaxWidth(),
                     label = { Text("Digite uma data", color = Color.White) },
                     textStyle = TextStyle(color = Color.DarkGray),
@@ -218,15 +183,15 @@ fun PacienteCadastroForm(
             ) {
                 Icon(
                     painter = painterResource(id = R.drawable.phone),
-                    contentDescription = "Ícone de Paciente",
+                    contentDescription = "Ícone de Telefone",
                     modifier = Modifier
                         .size(38.dp)
-                        .padding(end = 16.dp)
+                        .padding(end = 10.dp)
                         .align(alignment = Alignment.CenterVertically)
                 )
                 OutlinedTextField(
-                    value = telefone,
-                    onValueChange = { onTelefoneChange(it) },
+                    value = telefoneState.value,
+                    onValueChange = { telefoneState.value = it },
                     modifier = Modifier.fillMaxWidth(),
                     label = { Text("Digite seu telefone", color = Color.White) },
                     textStyle = TextStyle(color = Color.DarkGray),
@@ -245,12 +210,12 @@ fun PacienteCadastroForm(
                     contentDescription = "Ícone de Paciente",
                     modifier = Modifier
                         .size(38.dp)
-                        .padding(end = 16.dp)
+                        .padding(end = 10.dp)
                         .align(alignment = Alignment.CenterVertically)
                 )
                 OutlinedTextField(
-                    value = endereco,
-                    onValueChange = { onEnderecoChange(it) },
+                    value = enderecoState.value,
+                    onValueChange = { enderecoState.value = it },
                     modifier = Modifier.fillMaxWidth(),
                     label = { Text("Digite seu endereço", color = Color.White) },
                     textStyle = TextStyle(color = Color.DarkGray),
@@ -259,16 +224,27 @@ fun PacienteCadastroForm(
             }
 
             // Botão de Cadastro
+            // Botão de Cadastro
             Button(
                 onClick = {
                     val paciente = PacienteModel(
-                        nome = nome,
-                        cpf = cpf,
-                        dtNascimento = LocalDate.parse(data, DateTimeFormatter.ofPattern("dd/MM/yyyy")),
-                        telefone = telefone,
-                        endereco = endereco
+                        nome = nomeState.value,
+                        cpf = cpfState.value,
+                        dtNascimento = LocalDate.parse(
+                            dataState.value,
+                            DateTimeFormatter.ofPattern("dd/MM/yyyy")
+                        ),
+                        telefone = telefoneState.value,
+                        endereco = enderecoState.value
                     )
                     pacienteRepository.salvar(paciente)
+
+                    // Limpa os campos após o cadastro ser realizado com sucesso
+                    nomeState.value = ""
+                    cpfState.value = ""
+                    dataState.value = ""
+                    telefoneState.value = ""
+                    enderecoState.value = ""
                 },
                 modifier = Modifier
                     .fillMaxWidth()
@@ -279,14 +255,27 @@ fun PacienteCadastroForm(
                     modifier = Modifier.padding(8.dp)
                 )
             }
+
+            Spacer(modifier = Modifier.height(5.dp))
+
+            // Adiciona a segunda linha de ícones
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(50.dp)
+                    .background(Brush.linearGradient(colors = listOf(AzulMedio, AzulPiscina))),
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
+                Icon(
+                    painter = painterResource(id = R.drawable.arrow_back_ios_24),
+                    contentDescription = "Icon 1",
+                    Modifier
+                        .padding(10.dp)
+                        .clickable {
+                            navController.navigate("menuscreen")
+                        }
+                )
+            }
         }
     }
 }
-
-/*@Preview(showBackground = true, showSystemUi = true)
-@Composable
-fun PacienteCadastroScreenPreview() {
-    MedConnectFIAPTheme {
-        PacienteCadastroScreen()
-    }
-}*/

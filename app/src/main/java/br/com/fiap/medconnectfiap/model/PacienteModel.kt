@@ -23,5 +23,12 @@ data class PacienteModel(
         dtNascimento: LocalDate = LocalDate.of(1980, 1, 1),
         telefone: String = "",
         endereco: String = ""
-    ) : this(id, nome, cpf, dtNascimento.format(DateTimeFormatter.ofPattern("dd/MM/yyyy")), telefone, endereco)
+    ) : this(
+        id,
+        nome,
+        cpf,
+        dtNascimento.format(DateTimeFormatter.ofPattern("dd/MM/yyyy")),
+        telefone,
+        endereco
+    )
 }

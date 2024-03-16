@@ -1,45 +1,47 @@
 package br.com.fiap.medconnectfiap.Screens
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import br.com.fiap.medconnectfiap.R
 import br.com.fiap.medconnectfiap.ui.theme.AzulClaro
 import br.com.fiap.medconnectfiap.ui.theme.AzulEscuro
 import br.com.fiap.medconnectfiap.ui.theme.AzulMedio
 import br.com.fiap.medconnectfiap.ui.theme.AzulPiscina
-import br.com.fiap.medconnectfiap.ui.theme.MedConnectFIAPTheme
-import androidx.navigation.NavController
-import androidx.navigation.compose.rememberNavController
-import androidx.compose.ui.unit.sp
+
 
 @Composable
 fun MenuScreen(navController: NavController) {
     Column(
         modifier = Modifier
-            .fillMaxSize() // Preenche toda a tela
+            .fillMaxSize()
             .background(Brush.linearGradient(colors = listOf(AzulEscuro, AzulClaro))),
-        verticalArrangement = Arrangement.SpaceBetween // Posiciona os itens com espaçamento entre eles
+        verticalArrangement = Arrangement.SpaceBetween
     ) {
         Row(
             modifier = Modifier
-                .fillMaxWidth() // Preenche a largura disponível
+                .fillMaxWidth()
                 .height(50.dp)
                 .background(Brush.linearGradient(colors = listOf(AzulMedio, AzulPiscina))),
             horizontalArrangement = Arrangement.SpaceBetween
@@ -49,7 +51,7 @@ fun MenuScreen(navController: NavController) {
                 contentDescription = "Icone de Menu",
                 Modifier.padding(10.dp)
             )
-            Spacer(modifier = Modifier.weight(1f)) // Adiciona um espaçador à direita
+            Spacer(modifier = Modifier.weight(1f))
             Icon(
                 painter = painterResource(id = R.drawable.menu_24),
                 contentDescription = "Icone de Notificações",
@@ -60,15 +62,10 @@ fun MenuScreen(navController: NavController) {
         Text(
             modifier = Modifier.align( Alignment.CenterHorizontally),
             text = "MedConnect",
-            fontSize = 32.sp, // Tamanho grande
-            fontWeight = FontWeight.Bold, // Letras grossas
+            fontSize = 32.sp,
+            fontWeight = FontWeight.Bold,
             color = AzulEscuro
-
         )
-
-
-
-
 
         // Botões de navegação
         Column(
@@ -77,7 +74,9 @@ fun MenuScreen(navController: NavController) {
                 .padding(vertical = 16.dp)
         ) {
             Button(
-                onClick = {},
+                onClick = {
+                    navController.navigate("medicocadastroscreen")
+                },
                 colors = ButtonDefaults.buttonColors(AzulMedio),
                 modifier = Modifier
                     .padding(horizontal = 16.dp)
@@ -122,24 +121,12 @@ fun MenuScreen(navController: NavController) {
                 )
             }
             Spacer(modifier = Modifier.height(16.dp))
-            Button(
-                onClick = {},
-                colors = ButtonDefaults.buttonColors(AzulMedio),
-                modifier = Modifier
-                    .padding(horizontal = 16.dp)
-                    .width(150.dp)
-            ) {
-                Text(
-                    text = "Consulta",
-                    fontSize = 20.sp,
-                    color = Color.White
-                )
-            }
+
         }
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        // Adiciona a segunda linha de ícones
+        // Adiciona navegação ao final da página
         Row(
             modifier = Modifier
                 .fillMaxWidth()

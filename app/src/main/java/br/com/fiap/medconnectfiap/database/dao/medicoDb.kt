@@ -1,28 +1,29 @@
 package br.com.fiap.medconnectfiap.database.dao
 
+
 import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import br.com.fiap.medconnectfiap.database.dao.PacienteDao
-import br.com.fiap.medconnectfiap.model.PacienteModel
+import br.com.fiap.medconnectfiap.model.MedicoModel
 
-@Database(entities = [PacienteModel::class], version = 1)
-abstract class PacienteDb : RoomDatabase() {
+@Database(entities = [MedicoModel::class], version = 1)
+abstract class MedicoDb : RoomDatabase() {
 
-    abstract fun pacienteDao(): PacienteDao
+    abstract fun medicoDao(): MedicoDao
 
     companion object {
 
-        private lateinit var instance: PacienteDb
+        private lateinit var instance: MedicoDb
 
-        fun getDatabase(context: Context): PacienteDb {
+        fun getDatabase(context: Context): MedicoDb {
             if (!::instance.isInitialized) {
                 instance = Room
                     .databaseBuilder(
                         context,
-                        PacienteDb::class.java,
-                        "paciente_db"
+                        MedicoDb::class.java,
+                        "medico_db"
                     )
                     .allowMainThreadQueries()
                     .fallbackToDestructiveMigration()

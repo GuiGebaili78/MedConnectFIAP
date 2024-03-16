@@ -1,5 +1,6 @@
 package br.com.fiap.medconnectfiap.Screens
 
+
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -32,36 +33,31 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import br.com.fiap.medconnectfiap.R
-import br.com.fiap.medconnectfiap.database.repository.PacienteRepository
-import br.com.fiap.medconnectfiap.model.PacienteModel
+import br.com.fiap.medconnectfiap.database.repository.MedicoRepository
+import br.com.fiap.medconnectfiap.model.MedicoModel
 import br.com.fiap.medconnectfiap.ui.theme.AzulClaro
 import br.com.fiap.medconnectfiap.ui.theme.AzulEscuro
 import br.com.fiap.medconnectfiap.ui.theme.AzulMedio
 import br.com.fiap.medconnectfiap.ui.theme.AzulPiscina
-import java.time.LocalDate
-import java.time.format.DateTimeFormatter
 
 @Composable
-fun PacienteCadastroScreen(navController: NavController) {
+fun MedicoCadastroScreen(navController: NavController) {
 
     val nomeState = remember {
         mutableStateOf("")
     }
-    val cpfState = remember {
+    val crmState = remember {
         mutableStateOf("")
     }
-    val dataState = remember {
+    val especialidadeState = remember {
         mutableStateOf("")
     }
-    val telefoneState = remember {
-        mutableStateOf("")
-    }
-    val enderecoState = remember {
+    val contatoState = remember {
         mutableStateOf("")
     }
 
     val context = LocalContext.current
-    val pacienteRepository = PacienteRepository(context)
+    val medicoRepository = MedicoRepository(context)
 
     Column(
         modifier = Modifier
@@ -95,7 +91,7 @@ fun PacienteCadastroScreen(navController: NavController) {
             verticalAlignment = Alignment.CenterVertically
         ) {
             Text(
-                text = "CADASTRO DE PACIENTES",
+                text = "CADASTRO DE MÉDICOS",
                 fontSize = 24.sp,
                 color = Color.White,
                 fontWeight = FontWeight.Bold,
@@ -113,7 +109,7 @@ fun PacienteCadastroScreen(navController: NavController) {
             ) {
                 Icon(
                     painter = painterResource(id = R.drawable.person_pin_24),
-                    contentDescription = "Ícone de Paciente",
+                    contentDescription = "Ícone de Médico",
                     modifier = Modifier
                         .size(38.dp)
                         .padding(end = 10.dp)
@@ -129,7 +125,7 @@ fun PacienteCadastroScreen(navController: NavController) {
                 )
             }
 
-            // CPF
+            // CRM
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -144,34 +140,10 @@ fun PacienteCadastroScreen(navController: NavController) {
                         .align(alignment = Alignment.CenterVertically)
                 )
                 OutlinedTextField(
-                    value = cpfState.value,
-                    onValueChange = { cpfState.value = it },
+                    value = crmState.value,
+                    onValueChange = { crmState.value = it },
                     modifier = Modifier.fillMaxWidth(),
-                    label = { Text("Digite seu CPF", color = Color.White) },
-                    textStyle = TextStyle(color = Color.DarkGray),
-                    keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Number)
-                )
-            }
-
-            // Data de Nascimento
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(16.dp)
-            ) {
-                Icon(
-                    painter = painterResource(id = R.drawable.calendar),
-                    contentDescription = "Ícone de Calendário",
-                    modifier = Modifier
-                        .size(38.dp)
-                        .padding(end = 10.dp)
-                        .align(alignment = Alignment.CenterVertically)
-                )
-                OutlinedTextField(
-                    value = dataState.value,
-                    onValueChange = { dataState.value = it },
-                    modifier = Modifier.fillMaxWidth(),
-                    label = { Text("Digite uma data", color = Color.White) },
+                    label = { Text("Digite seu CRM", color = Color.White) },
                     textStyle = TextStyle(color = Color.DarkGray),
                     keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Number)
                 )
@@ -192,16 +164,16 @@ fun PacienteCadastroScreen(navController: NavController) {
                         .align(alignment = Alignment.CenterVertically)
                 )
                 OutlinedTextField(
-                    value = telefoneState.value,
-                    onValueChange = { telefoneState.value = it },
+                    value = especialidadeState.value,
+                    onValueChange = { especialidadeState.value = it },
                     modifier = Modifier.fillMaxWidth(),
-                    label = { Text("Digite seu telefone", color = Color.White) },
+                    label = { Text("Digite sua especialidade", color = Color.White) },
                     textStyle = TextStyle(color = Color.DarkGray),
                     keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Phone)
                 )
             }
 
-            // Endereço
+            // Contato
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -209,43 +181,39 @@ fun PacienteCadastroScreen(navController: NavController) {
             ) {
                 Icon(
                     painter = painterResource(id = R.drawable.location),
-                    contentDescription = "Ícone de Paciente",
+                    contentDescription = "Ícone de telefone",
                     modifier = Modifier
                         .size(38.dp)
                         .padding(end = 10.dp)
                         .align(alignment = Alignment.CenterVertically)
                 )
                 OutlinedTextField(
-                    value = enderecoState.value,
-                    onValueChange = { enderecoState.value = it },
+                    value = contatoState.value,
+                    onValueChange = { contatoState.value = it },
                     modifier = Modifier.fillMaxWidth(),
-                    label = { Text("Digite seu endereço", color = Color.White) },
+                    label = { Text("Digite seu contato", color = Color.White) },
                     textStyle = TextStyle(color = Color.DarkGray),
                     keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Text)
                 )
             }
 
+
             // Botão de Cadastro
             Button(
                 onClick = {
-                    val paciente = PacienteModel(
+                    val medico = MedicoModel(
                         nome = nomeState.value,
-                        cpf = cpfState.value,
-                        dtNascimento = LocalDate.parse(
-                            dataState.value,
-                            DateTimeFormatter.ofPattern("dd/MM/yyyy")
-                        ),
-                        telefone = telefoneState.value,
-                        endereco = enderecoState.value
+                        crm = crmState.value,
+                        especialidade = especialidadeState.value,
+                        contato = contatoState.value
                     )
-                    pacienteRepository.salvar(paciente)
+                    medicoRepository.salvar(medico)
 
                     // Limpa os campos após o cadastro ser realizado com sucesso
                     nomeState.value = ""
-                    cpfState.value = ""
-                    dataState.value = ""
-                    telefoneState.value = ""
-                    enderecoState.value = ""
+                    crmState.value = ""
+                    especialidadeState.value = ""
+                    contatoState.value = ""
                 },
                 modifier = Modifier
                     .fillMaxWidth()
@@ -256,7 +224,6 @@ fun PacienteCadastroScreen(navController: NavController) {
                     modifier = Modifier.padding(8.dp)
                 )
             }
-
             Spacer(modifier = Modifier.height(5.dp))
 
             // Adiciona navegação ao final da página
@@ -269,7 +236,7 @@ fun PacienteCadastroScreen(navController: NavController) {
             ) {
                 Icon(
                     painter = painterResource(id = R.drawable.arrow_back_ios_24),
-                    contentDescription = "Icon 1",
+                    contentDescription = "Icone de voltar",
                     Modifier
                         .padding(10.dp)
                         .clickable {

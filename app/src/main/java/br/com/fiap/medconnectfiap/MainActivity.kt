@@ -15,6 +15,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import br.com.fiap.medconnectfiap.Screens.MedicoCadastroScreen
 import br.com.fiap.medconnectfiap.Screens.MenuScreen
 import br.com.fiap.medconnectfiap.Screens.PacienteCadastroScreen
 import br.com.fiap.medconnectfiap.Screens.ProntuarioScreen
@@ -48,6 +49,9 @@ class MainActivity : ComponentActivity() {
                         }
                         composable(route = "prontuarioscreen") {
                             ProntuarioScreen(navController)
+                        }
+                        composable(route = "medicocadastroscreen") {
+                            MedicoCadastroScreen(navController)
                         }
 
                     }

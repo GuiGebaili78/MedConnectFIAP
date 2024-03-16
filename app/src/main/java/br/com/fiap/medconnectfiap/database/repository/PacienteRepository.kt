@@ -7,7 +7,6 @@ import br.com.fiap.medconnectfiap.database.dao.PacienteDb
 import br.com.fiap.medconnectfiap.model.PacienteModel
 
 
-
 class PacienteRepository(context: Context) {
 
     private val db = PacienteDb.getDatabase(context).pacienteDao()
